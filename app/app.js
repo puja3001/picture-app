@@ -12,8 +12,8 @@ var instagram = require('instagram-node-lib');
 var moment = require('moment');
 var pinch = require('pinch');
 
-instagram.set('client_id', '5b9e690526c34c5eb0bf9df091cc8ac6');
-instagram.set('client_secret', '0341d70127b041428c25b3ca11eb8f4f');
+instagram.set('client_id', 'instagramID');
+instagram.set('client_secret', 'instagramSecret');
 
 // required to make an https/tls connection to pb
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
