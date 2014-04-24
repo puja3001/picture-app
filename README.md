@@ -7,50 +7,41 @@ Use the IBM Bluemix Location services and Instagram to find pictures near an add
 
 - Pitney Bowes Geocoding service
 
-## Deploying the App and Binding the Geocoding Service ##
-Multiple methods exist for interacting with the BlueMix platform. Outlined below are two of those methods:
+### Deploying the App and Binding the Geocoding Service ###
+Multiple methods exist for interacting with the BlueMix platform. Outlined below are two of those methods.
 
-1. [Command-Line](#method-command-line) 
-2. [ IBM DevOps Services](#method-ibm-jazzhub)
-
-### Method: Command-Line ###
-#### Prerequisites ####
+## Method: Command-Line ##
 
 Before we begin, we first need to install the [**cf**](https://github.com/cloudfoundry/cli/releases) command line tool that will be used to upload and manage your application. If you've previously installed an older version of the cf tool, make sure you are now using v6 of cf by passing it the -v flag:
 
     cf -v
 
-#### Steps ####
-In the terminal, go into the directory named **app**, and follow these steps.
+Clone the Node picture finder application from the IBM jStart DevOps repository.
 
-1. Login to Bluemix.
+git clone https://hub.jazz.net/git/jstart/Picture.Finder.(Node)
 
-   | *usage:*   | `$ cf login [-a API_URL] [-o ORG] [-s SPACE]`|
-   |------------|----------------------------------------------|
+Go to the directory of your app and follow these steps:
+
+Login to Bluemix.
+
+   | *usage:*   | `$ cf login [-a API_URL]`                    |
+   |:-----------|:---------------------------------------------|
    | *example:* | `$ cf login -a https://api.ng.bluemix.net`   |
 
-2. Go to the Bluemix UI and create an instance of the Pitney Bowes Geocoding service.  As part of the service creation you'll need to create a Pitney Bowes developer account and application.
+**From the directory that houses the _app.js_ file** (not from the root directory that contains this *README.md* file), locate the manifest file. 
+A manifest.yml file is included with the application to streamline the deployment process. It sets the application name, memory, and the number of instances.
+Edit manifest.yml to change the values that must be unique for your app - the host name and the name of the already-created Geocoding servic. The host name must be something other than picturefinder so that your resulting URL route doesn't conflict with the demo URL (http://picturefinder.ng.bluemix.net).
 
-3. **From the directory that houses the _app.js_ file** (not from the root directory that contains this *README.md* file), push the app with the --no-start option so we can bind our required service before starting.  Pass the -c flag to specify the start command that should be used by CloudFoundry to run your app.  Be sure to give your app a unique app name to be used for its hostname; for instance the example below would result in http://picturefinder-jayallenmn.ng.bluemix.net.
+Also located in the **app** directory, edit app.js and replace the Instagram ID and secret with your ID and secret.
 
-   | *usage:*   | `$ cf push APP [--no-manifest] [--no-start] [-c COMMAND]`                |
-   |------------|--------------------------------------------------------------------------|
-   | *example:* | `$ cf push picturefinder-<username> --no-manifest --no-start -c "node app.js"`                |
+Push the the application.  You do not need to supply any parameters on the push as they are supplied through the manifest.yml file.
 
-4. Bind the Geocoding service instance you created previously to the new app
-
-   | *usage:*   | `$ cf bind-service APP SERVICE_INSTANCE`|
-   |------------|-----------------------------------------|
-   | *example:* | `$ cf bind-service picturefinder-<username> Geocoding-demo`|
-
-5. Start the app
-
-   | *usage:*   | `$ cf start APP`                 |
-   |------------|----------------------------------|
-   | *example:* | `$ cf start picturefinder-<username>` |
+   | *usage:*   | `$ cf push APPNAME [--no-manifest] [-c COMMAND]`                        |
+   |:-----------|:--------------------------------------------------------------------|
+   | *example:* | `$ cf push `            |
    
-
-### Method:  IBM DevOps Services ###
+  
+## Method:  IBM DevOps Services ##
 1. Browse to the  DevOps Services project repository located [here](https://hub.jazz.net/project/jstart/Picture%20Finder%20%28Node%29/overview).  Click on **Edit Code** for the project.
 2. Click on "Fork".  This will provide you with a personal copy of the code within your DevOps Services project space.
 3. Located in the **app** directory of the project, edit manifest.yml and change the host name to something unique and the service name
